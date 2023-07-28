@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
-import { useLocalStorage } from "usehooks-ts";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { ContractUI } from "~~/components/scaffold-eth";
+import { useLocalStorage } from "~~/hooks/scaffold-eth";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 import { getContractNames } from "~~/utils/scaffold-eth/contractNames";
 

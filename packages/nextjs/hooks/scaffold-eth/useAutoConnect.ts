@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useEffectOnce, useLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "./useLocalStorage";
+import { useEffectOnce, useReadLocalStorage } from "usehooks-ts";
 import { Connector, useAccount, useConnect } from "wagmi";
 import { hardhat } from "wagmi/chains";
 import scaffoldConfig from "~~/scaffold.config";
@@ -48,16 +49,22 @@ const getInitialConnector = (
  * Automatically connect to a wallet/connector based on config and prior wallet
  */
 export const useAutoConnect = (): void => {
-  const [walletId, setWalletId] = useLocalStorage<string>(walletIdStorageKey, "");
+  const wagmiWalletValue = useReadLocalStorage<string>("wagmi.wallet");
+  console.log("WagmiWalletValue", wagmiWalletValue);
+  const [walletId, setWalletId] = useLocalStorage<string>(walletIdStorageKey, wagmiWalletValue ?? "");
   const connectState = useConnect();
   const accountState = useAccount();
 
   useEffect(() => {
+    console.log("WalletID", walletId);
+    console.log("Account State, accountState", accountState);
     if (accountState.isConnected) {
       // user is connected, set walletName
       setWalletId(accountState.connector?.id ?? "");
     } else {
       // user has disconnected, reset walletName
+      console.log("Will be emptying localSTorage....");
+      window.localStorage.setItem("wagmi.wallet", "");
       setWalletId("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,6 +72,7 @@ export const useAutoConnect = (): void => {
 
   useEffectOnce(() => {
     const initialConnector = getInitialConnector(walletId, connectState.connectors);
+    console.log("initialConnector ", initialConnector, "WalletID IS ---", walletId);
 
     if (initialConnector?.connector) {
       connectState.connect({ connector: initialConnector.connector, chainId: initialConnector.chainId });

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "./useLocalStorage";
 import { Hex, HttpTransport, PrivateKeyAccount, createWalletClient, http } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { Chain, WalletClient, usePublicClient } from "wagmi";
