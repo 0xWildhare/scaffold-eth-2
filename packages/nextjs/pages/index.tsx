@@ -1,12 +1,15 @@
 import Link from "next/link";
 import type { NextPage } from "next";
+import { useAccount } from "wagmi";
 import { BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
 
 const Home: NextPage = () => {
+  const { address } = useAccount();
   return (
     <>
       <MetaHeader />
+      <span>{address}</span>
       <div className="flex items-center flex-col flex-grow pt-10">
         <div className="px-5">
           <h1 className="text-center mb-8">

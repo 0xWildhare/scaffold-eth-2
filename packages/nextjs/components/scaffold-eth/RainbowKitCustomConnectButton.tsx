@@ -3,12 +3,14 @@ import { useDisconnect, useSwitchNetwork } from "wagmi";
 import { ArrowLeftOnRectangleIcon, ArrowsRightLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import { Balance, BlockieAvatar } from "~~/components/scaffold-eth";
 import { useNetworkColor } from "~~/hooks/scaffold-eth";
+import { useAutoConnect } from "~~/hooks/scaffold-eth/useAutoConnect";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 /**
  * Custom Wagmi Connect Button (watch balance + custom design)
  */
 export const RainbowKitCustomConnectButton = () => {
+  useAutoConnect();
   const networkColor = useNetworkColor();
   const configuredNetwork = getTargetNetwork();
   const { disconnect } = useDisconnect();
